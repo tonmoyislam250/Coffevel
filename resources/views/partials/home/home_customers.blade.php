@@ -28,7 +28,7 @@
 
         <div class="col-lg-5 col-md-6 d-none d-md-block">
           <div class="about-img" data-aos="fade-right" data-aos-delay="100">
-            <img src="{{ asset('storage/home/Coffevel.jpg') }}" alt="Coffevel">
+            <img src="{{ asset('storage/home/laravel.jpg') }}" alt="Coffevel">
           </div>
         </div>
 

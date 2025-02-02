@@ -88,7 +88,7 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 5. Create a pull request on the original repository.
 
 ## License
-This project is licensed under the [MIT License](https://github.com/snykk/Coffevel/blob/master/LICENSE).
+This project is licensed under the [MIT License](https://github.com/tonmoyislam250/Coffevel/blob/master/LICENSE).
 
 ## In Summary
  Feel free to explore the application and give it a try yourself. If you have any questions or encounter any issues, please don't hesitate to reach out. Your feedback is greatly appreciated. Happy exploring!!!
