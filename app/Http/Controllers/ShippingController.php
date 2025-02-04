@@ -11,7 +11,7 @@ class ShippingController extends Controller
         $weightFactor = 1000;
         $calculatedCost = $baseCost + ($weight / 1000) * $weightFactor;
         $mockResponse = [
-            'rajaongkir' => [
+            'shipping' => [
                 'results' => [
                     [
                         'origin' => $origin,
@@ -39,7 +39,7 @@ class ShippingController extends Controller
     {
         if ($data == 'province') {
             $mockProvinceData = [
-                'rajaongkir' => [
+                'shipping' => [
                     'results' => [
                         ['province_id' => 1, 'province' => 'Jakarta'],
                         ['province_id' => 2, 'province' => 'Bandung'],
@@ -50,7 +50,7 @@ class ShippingController extends Controller
             return json_encode($mockProvinceData);
         } elseif (strpos($data, 'city') !== false) {
             $mockCityData = [
-                'rajaongkir' => [
+                'shipping' => [
                     'results' => [
                         ['city_id' => 1, 'city_name' => 'Central Jakarta'],
                         ['city_id' => 2, 'city_name' => 'North Jakarta'],
@@ -68,7 +68,7 @@ class ShippingController extends Controller
         $province = $this->shipping_get('province');
         $data = json_decode($province, true);
         header("Content-Type: application/json");
-        echo json_encode($data['rajaongkir']['results']);
+        echo json_encode($data['shipping']['results']);
     }
 
     public function city($province_id)
@@ -77,7 +77,7 @@ class ShippingController extends Controller
             if (is_numeric($province_id)) {
                 $city = $this->shipping_get('city?province=' . $province_id);
                 $data = json_decode($city, true);
-                echo json_encode($data['rajaongkir']['results']);
+                echo json_encode($data['shipping']['results']);
             } else {
                 abort(404);
             }
@@ -91,6 +91,6 @@ class ShippingController extends Controller
         $weight = (int)$quantity * 300;
         $price = $this->shipping_post($origin, $destination, $weight, $courier);
         $data = json_decode($price, true);
-        echo json_encode($data['rajaongkir']["results"]);
+        echo json_encode($data['shipping']["results"]);
     }
 }
