@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\{Auth, Hash};
+use Illuminate\Support\Facades\{Auth, Hash, Mail};
+use App\Mail\OtpMail;
 
 class AuthController extends Controller
 {
@@ -51,7 +52,7 @@ class AuthController extends Controller
             'username' => 'required|max:15',
             'email' => 'required|email:rfc,dns|unique:users,email',
             'password' => 'required|confirmed|min:4',
-            'phone' => 'required|numeric',
+            'phone' => 'required',
             'gender' => 'required',
             'address' => 'required',
         ]);
@@ -64,19 +65,49 @@ class AuthController extends Controller
             'remember_token' => Str::random(30),
             'role_id' => 2 // value 2 for customer role
         ]);
-        
+
         try {
             User::create($validatedData);
-            $message = "Congratulations, your account has been created!";
 
-            myFlasherBuilder(message: $message, success: true);
+            // Generate OTP and send to user's email
+            $otp = rand(100000, 999999);
+            $request->session()->put('otp', $otp);
+            $request->session()->put('otp_email', $request->email);
+            Mail::to($request->email)->send(new OtpMail($otp));
 
-            return redirect('/auth/login');
+            return redirect('/auth/verify-otp');
         } catch (\Illuminate\Database\QueryException $exception) {
             return abort(500);
         }
     }
 
+    public function verifyOtpGet()
+    {
+        $title = "Verify OTP";
+
+        return view('/auth/verify-otp', compact("title"));
+    }
+
+    public function verifyOtpPost(Request $request)
+    {
+        $request->validate([
+            'otp' => 'required|numeric'
+        ]);
+
+        if ($request->otp == session('otp')) {
+            $request->session()->forget('otp');
+            $request->session()->forget('otp_email');
+            $message = "Registration success";
+
+            myFlasherBuilder(message: $message, success: true);
+            return redirect('/auth/login');
+        }
+
+        $message = "Invalid OTP";
+
+        myFlasherBuilder(message: $message, failed: true);
+        return back();
+    }
 
     public function logoutPost()
     {

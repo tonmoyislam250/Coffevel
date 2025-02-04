@@ -30,7 +30,7 @@ class ProfileController extends Controller
     {
         $rules = [
             'fullname' => 'required|max:255',
-            'phone' => 'required|numeric',
+            'phone' => 'required',
             'address' => 'required',
         ];
 

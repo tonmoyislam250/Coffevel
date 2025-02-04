@@ -31,6 +31,8 @@ Route::middleware(['alreadyLogin'])->group(function () {
     // Register
     Route::get('/auth/register', [AuthController::class, "registrationGet"]);
     Route::post('/auth/register', [AuthController::class, "registrationPost"]);
+    Route::get('/auth/verify-otp', [AuthController::class, "verifyOtpGet"]);
+    Route::post('/auth/verify-otp', [AuthController::class, "verifyOtpPost"]);
 });
 
 
