@@ -17,6 +17,7 @@ Coffevel is a web application built using the Laravel framework that allows user
 
 ### General User
 - Authentication and Registration Page: Users can log in or register for an account.
+- OTP verification Page: User are verified with OTP while registering
 - Home Page: The main landing page for users.
 - Point Page: Users can track loyalty points earned through transactions.
 - Profile Page: Users can edit their profile data and change passwords if needed.
